@@ -1,6 +1,6 @@
 {
     "name": "danielneis/moodle-availability_timesinceenrol",
-    "description": "A template for Moodle Availability Condition",
+    "description": "Restrict access based on number of days since user enroled.",
     "type": "moodle-availability",
     "license": "GPLv3",
     "authors": [
