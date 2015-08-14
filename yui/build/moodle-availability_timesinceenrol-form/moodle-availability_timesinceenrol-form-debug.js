@@ -22,21 +22,23 @@ M.availability_timesinceenrol.form = Y.Object(M.core_availability.plugin);
  * @method initInner
  * @param {String} html HTML to use for date fields
  * @param {Number} defaultTime Time value that corresponds to initial fields
+ *M.availability_timesinceenrol.form.initInner = function(name) {
+ *    this.name = name;
+ *};
  */
-M.availability_timesinceenrol.form.initInner = function(name) {
-    this.name = name;
-};
 
 M.availability_timesinceenrol.form.getNode = function(json) {
 
     // Example controls contain only one tickbox.
-    var html = '<label>' + name + ' <input type="checkbox"/></label>';
+    var html = '<label>' +
+                M.util.get_string('mintimesinceenrol', 'availability_timesinceenrol') +
+               ' <input name="mintimesinceenrol" type="number"/></label>';
     var node = Y.Node.create('<span>' + html + '</span>');
 
     // Set initial values based on the value from the JSON data in Moodle
     // database. This will have values undefined if creating a new one.
-    if (json.allow) {
-        node.one('input').set('checked', true);
+    if (json.mintimesinceenrol) {
+        node.one('input[name=mintimesinceenrol]').set('value', json.mintimesinceenrol / (3600 * 24));
     }
 
     // Add event handlers (first time only). You can do this any way you
@@ -56,30 +58,20 @@ M.availability_timesinceenrol.form.getNode = function(json) {
 };
 
 M.availability_timesinceenrol.form.fillValue = function(value, node) {
-    // This function gets passed the node (from above) and a value
-    // object. Within that object, it must set up the correct values
-    // to use within the JSON data in the form. Should be compatible
-    // with the structure used in the __construct and save functions
-    // within condition.php.
-    var checkbox = node.one('input');
-    value.allow = checkbox.get('checked') ? true : false;
+    var mintime = node.one('input[name=mintimesinceenrol]');
+    value.mintimesinceenrol = mintime.get('value') * 3600 * 24;
 };
 
 M.availability_completion.form.fillErrors = function(errors, node) {
-    // If the user has selected something invalid, this optional
-    // function can be included to report an error in the form. The
-    // error will show immediately as a 'Please set' tag, and if the
-    // user saves the form with an error still in place, they'll see
-    // the actual error text.
- 
-    // In this example an error is not possible...
-    if (false) {
+    var value = {};
+    this.fillValue(value, node);
+
+    if (value.mintimesinceenrol === '') {
         // ...but this is how you would add one if required. This is
         // passing your component name (availability_timesinceenrol) and the
         // name of a string within your lang file (error_message)
         // which will be shown if they submit the form.
-        node.one('input');
-        errors.push('availability_timesinceenrol:error_message');
+        errors.push('availability_timesinceenrol:error_mintimesinceenrol');
     }
 };
 

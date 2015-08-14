@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Date condition.
+ * Time since enrol condition.
  *
  * @package availability_timesinceenrol
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -41,11 +41,18 @@ class condition extends \core_availability\condition {
      * @throws \coding_exception If invalid data structure.
      */
     public function __construct($structure) {
-        $this->allow = true;
+        if (isset($structure->mintimesinceenrol)) {
+            $this->mintimesinceenrol = $structure->mintimesinceenrol;
+        }
     }
 
     public function save() {
-        return (object)array('type' => 'timesinceenrol');
+        $result = (object)array('type' => 'timesinceenrol');
+        
+        if ($this->businessemail) {
+            $result->mintimesinceenrol = $this->mintimesinceenrol;
+        }
+        return $result;
     }
 
     /**
@@ -54,14 +61,31 @@ class condition extends \core_availability\condition {
      * Intended for unit testing, as normally the JSON values are constructed
      * by JavaScript code.
      *
+     * @param int $mintimesinceenrol in seconds
      * @return stdClass Object representing condition
      */
-    public static function get_json() {
-        return (object)array('type' => 'timesinceenrol');
+    public static function get_json($mintimesinceenrol) {
+        return (object)array('type' => 'timesinceenrol', 'mintimesinceenrol' => $mintimesinceenrol);
     }
 
     public function is_available($not, \core_availability\info $info, $grabthelot, $userid) {
-        return $not;
+        global $PAGE, $CFG;
+        require_once($CFG->dirroot. '/enrol/locallib.php');
+        $course = $info->get_course();
+        $enrolmanager = new \course_enrolment_manager($PAGE, $course);
+        $allow = true;
+        if (!$enrolments = $enrolmanager->get_user_enrolments($userid)) {
+            $allow = false;
+        }
+        foreach ($enrolments as $enrol) {
+            if ((time() - $enrol->timestart) < $this->mintimesinceenrol ) {
+                $allow = false;
+            }
+        }
+        if (!$not) {
+            $allow = !$allow;
+        }
+        return $allow;
     }
 
     public function get_description($full, $not, \core_availability\info $info) {
@@ -75,15 +99,14 @@ class condition extends \core_availability\condition {
      * @param bool $standalone True to use standalone lang strings
      */
     protected function get_either_description($not, $standalone) {
-        return get_string('eitherdescription', 'availability_timesinceenrol');
+        return get_string('eitherdescription', 'availability_timesinceenrol', $this->mintimesinceenrol / (3600*24));
     }
 
     protected function get_debug_string() {
         return gmdate('Y-m-d H:i:s');
     }
 
-    public function update_after_restore(
-            $restoreid, $courseid, \base_logger $logger, $name) {
+    public function update_after_restore($restoreid, $courseid, \base_logger $logger, $name) {
         // Update the date, if restoring with changed date.
         $dateoffset = \core_availability\info::get_restore_date_offset($restoreid);
         if ($dateoffset) {

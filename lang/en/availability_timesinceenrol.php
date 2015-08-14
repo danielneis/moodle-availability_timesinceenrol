@@ -17,13 +17,14 @@
 /**
  * Language strings.
  *
- * @package availability_date
- * @copyright 2014 The Open University
+ * @package availability_timesinceenrol
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 $string['ajaxerror'] = 'Error contacting server';
-$string['pluginname'] = 'timesinceenrol';
-$string['title'] = 'timesinceenrol title';
-$string['description'] = 'timesinceenrol description';
-$string['eitherdescription'] = 'timesinceenrol either description';
+$string['description'] = 'Restrict availability based on time since user enroled.';
+$string['eitherdescription'] = 'you have enroled less then {$a} days ago.';
+$string['error_mintimesinceenrol'] = 'You must provide a number of days and it must be greater than zero.';
+$string['mintimesinceenrol'] = 'Days since enrol';
+$string['pluginname'] = 'Time since enrol';
+$string['title'] = 'Time since enrol';
