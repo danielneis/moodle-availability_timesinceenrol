@@ -1,0 +1,19 @@
+{
+    "name": "danielneis/moodle-availability_timesinceenrol",
+    "description": "A template for Moodle Availability Condition",
+    "type": "moodle-availability",
+    "license": "GPLv3",
+    "authors": [
+        {
+            "name": "Daniel Neis Araujo",
+            "email": "danielneis@gmail.com"
+        }
+    ],
+    "require": {
+        "composer/installers": "~1.0"
+    },
+    "extra": {
+        "installer-name": "timesinceenrol"
+    }
+}
+
