@@ -48,7 +48,7 @@ class condition extends \core_availability\condition {
 
     public function save() {
         $result = (object)array('type' => 'timesinceenrol');
-        
+
         if ($this->businessemail) {
             $result->mintimesinceenrol = $this->mintimesinceenrol;
         }
@@ -99,7 +99,7 @@ class condition extends \core_availability\condition {
      * @param bool $standalone True to use standalone lang strings
      */
     protected function get_either_description($not, $standalone) {
-        return get_string('eitherdescription', 'availability_timesinceenrol', $this->mintimesinceenrol / (3600*24));
+        return get_string('eitherdescription', 'availability_timesinceenrol', $this->mintimesinceenrol / (3600 * 24));
     }
 
     protected function get_debug_string() {

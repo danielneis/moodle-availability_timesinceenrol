@@ -28,9 +28,9 @@ M.availability_timesinceenrol.form = Y.Object(M.core_availability.plugin);
 M.availability_timesinceenrol.form.getNode = function(json) {
 
     // Example controls contain only one tickbox.
-    var html = '<label>' +
-                M.util.get_string('mintimesinceenrol', 'availability_timesinceenrol') +
-               ' <input name="mintimesinceenrol" type="number"/></label>';
+    var html = '<label>';
+    html += M.util.get_string('mintimesinceenrol', 'availability_timesinceenrol');
+    html += ' <input name="mintimesinceenrol" type="number"/></label>';
     var node = Y.Node.create('<span>' + html + '</span>');
 
     // Set initial values based on the value from the JSON data in Moodle

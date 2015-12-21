@@ -47,7 +47,7 @@ class availability_date_condition_testcase extends advanced_testcase {
      * Tests constructing and using date condition as part of tree.
      */
     public function test_in_tree() {
-        global $SITE, $USER, $CFG;
+        global $USER;
         $this->resetAfterTest();
         $this->setAdminUser();
 
@@ -148,7 +148,7 @@ class availability_date_condition_testcase extends advanced_testcase {
      * Tests the is_available() and is_available_to_all() functions.
      */
     public function test_is_available() {
-        global $SITE, $USER;
+        global $USER;
 
         $time = strtotime('2014-02-18 14:50:10 GMT');
         $info = new \core_availability\mock_info();
@@ -179,12 +179,10 @@ class availability_date_condition_testcase extends advanced_testcase {
      * Tests the get_description and get_standalone_description functions.
      */
     public function test_get_description() {
-        global $SITE, $CFG;
 
         $this->resetAfterTest();
         $this->setTimezone('UTC');
 
-        $modinfo = get_fast_modinfo($SITE);
         $info = new \core_availability\mock_info();
         $time = strtotime('2014-02-18 14:55:01 GMT');
 
