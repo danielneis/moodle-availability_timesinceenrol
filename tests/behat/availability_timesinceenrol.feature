@@ -1,8 +1,8 @@
-@availability @availability_date
-Feature: availability_date
+@availability @availability_timesinceenrol
+Feature: availability_timesinceenrol
   In order to control student access to activities
   As a teacher
-  I need to set date conditions which prevent student access
+  I need to set timesinceenrol conditions which prevent student access
 
   Background:
     Given the following "courses" exist:
@@ -13,9 +13,10 @@ Feature: availability_date
       | teacher1 |
       | student1 |
     And the following "course enrolments" exist:
-      | user     | course | role           |
-      | teacher1 | C1     | editingteacher |
-      | student1 | C1     | student        |
+      | user     | course | role           | enrolstartdate
+      | teacher1 | C1     | editingteacher | 2015-12-31
+      | student1 | C1     | student        | 2015-12-31
+      | student2 | C1     | student        | 2015-12-30
     And the following config values are set as admin:
       | enableavailability  | 1 |
 
@@ -27,7 +28,7 @@ Feature: availability_date
     And I follow "Course 1"
     And I turn editing mode on
 
-    # Add a Page with a date condition that does match (from the past).
+    # Add a Page with a timesinceenrol condition that does match.
     And I add a "Page" to section "1"
     And I set the following fields to these values:
       | Name         | Page 1 |
@@ -35,12 +36,12 @@ Feature: availability_date
       | Page content | Test   |
     And I expand all fieldsets
     And I click on "Add restriction..." "button"
-    And I click on "Date" "button" in the "Add restriction..." "dialogue"
+    And I click on "Days since enrol" "button" in the "Add restriction..." "dialogue"
     And I click on ".availability-item .availability-eye img" "css_element"
-    And I set the field "year" to "2013"
+    And I set the field "mintimesinceenrol" to "0"
     And I press "Save and return to course"
 
-    # Add a Page with a date condition that doesn't match (until the past).
+    # Add a Page with a timesinceenrol condition that doesn't match.
     And I add a "Page" to section "2"
     And I set the following fields to these values:
       | Name         | Page 2 |
@@ -48,13 +49,12 @@ Feature: availability_date
       | Page content | Test   |
     And I expand all fieldsets
     And I click on "Add restriction..." "button"
-    And I click on "Date" "button" in the "Add restriction..." "dialogue"
+    And I click on "Days since enrol" "button" in the "Add restriction..." "dialogue"
     And I click on ".availability-item .availability-eye img" "css_element"
-    And I set the field "Direction" to "until"
-    And I set the field "year" to "2013"
+    And I set the field "mintimesinceenrol" to "1"
     And I press "Save and return to course"
 
-    # Log back in as student.
+    # Log back in as student1.
     When I log out
     And I log in as "student1"
     And I am on site homepage
@@ -63,3 +63,13 @@ Feature: availability_date
     # Page 1 should appear, but page 2 does not.
     Then I should see "Page 1" in the "region-main" "region"
     And I should not see "Page 2" in the "region-main" "region"
+
+    # Log back in as student.
+    When I log out
+    And I log in as "student2"
+    And I am on site homepage
+    And I follow "Course 1"
+
+    # Page 1 and Page 2 should appear.
+    Then I should see "Page 1" in the "region-main" "region"
+    And I should see "Page 2" in the "region-main" "region"
