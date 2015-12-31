@@ -37,7 +37,7 @@ Feature: availability_timesinceenrol
       | Page content | Test   |
     And I expand all fieldsets
     And I click on "Add restriction..." "button"
-    And I click on "Days since enrol" "button" in the "Add restriction..." "dialogue"
+    And I click on "Time since enrol" "button" in the "Add restriction..." "dialogue"
     And I click on ".availability-item .availability-eye img" "css_element"
     And I set the field "mintimesinceenrol" to "0"
     And I press "Save and return to course"
@@ -50,7 +50,7 @@ Feature: availability_timesinceenrol
       | Page content | Test   |
     And I expand all fieldsets
     And I click on "Add restriction..." "button"
-    And I click on "Days since enrol" "button" in the "Add restriction..." "dialogue"
+    And I click on "Time since enrol" "button" in the "Add restriction..." "dialogue"
     And I click on ".availability-item .availability-eye img" "css_element"
     And I set the field "mintimesinceenrol" to "1"
     And I press "Save and return to course"
