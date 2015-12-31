@@ -12,6 +12,7 @@ Feature: availability_timesinceenrol
       | username |
       | teacher1 |
       | student1 |
+      | student2 |
     And the following "course enrolments" exist:
       | user     | course | role           | enrolstartdate
       | teacher1 | C1     | editingteacher | 2015-12-31
