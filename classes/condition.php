@@ -48,10 +48,7 @@ class condition extends \core_availability\condition {
 
     public function save() {
         $result = (object)array('type' => 'timesinceenrol');
-
-        if ($this->businessemail) {
-            $result->mintimesinceenrol = $this->mintimesinceenrol;
-        }
+        $result->mintimesinceenrol = $this->mintimesinceenrol;
         return $result;
     }
 
