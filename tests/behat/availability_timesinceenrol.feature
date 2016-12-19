@@ -15,9 +15,9 @@ Feature: availability_timesinceenrol
       | student2 |
     And the following "course enrolments" exist:
       | user     | course | role           | enrolstartdate
-      | teacher1 | C1     | editingteacher | 2015-12-31
-      | student1 | C1     | student        | 2015-12-31
-      | student2 | C1     | student        | 2015-12-30
+      | teacher1 | C1     | editingteacher | ##today##
+      | student1 | C1     | student        | ##today##
+      | student2 | C1     | student        | ##yesterday##
     And the following config values are set as admin:
       | enableavailability  | 1 |
 
@@ -65,7 +65,7 @@ Feature: availability_timesinceenrol
     Then I should see "Page 1" in the "region-main" "region"
     And I should not see "Page 2" in the "region-main" "region"
 
-    # Log back in as student.
+    # Log back in as student2.
     When I log out
     And I log in as "student2"
     And I am on site homepage
