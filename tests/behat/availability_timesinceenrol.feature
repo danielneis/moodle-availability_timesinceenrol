@@ -14,10 +14,10 @@ Feature: availability_timesinceenrol
       | student1 |
       | student2 |
     And the following "course enrolments" exist:
-      | user     | course | role           | enrolstartdate
-      | teacher1 | C1     | editingteacher | ##today##
-      | student1 | C1     | student        | ##today##
-      | student2 | C1     | student        | ##yesterday##
+      | user     | course | role           | enrolstartdate |
+      | teacher1 | C1     | editingteacher | ##today##      |
+      | student1 | C1     | student        | ##today##      |
+      | student2 | C1     | student        | ##yesterday##  |
     And the following config values are set as admin:
       | enableavailability  | 1 |
 
