@@ -62,8 +62,8 @@ Feature: availability_timesinceenrol
     And I follow "Course 1"
 
     # Page 1 should appear, but page 2 does not.
-    Then I should see "Page 1" in the "region-main" "region"
-    And I should not see "Page 2" in the "region-main" "region"
+    Then I should see "Page 1" in the "#section-1" "css_element"
+    And I should not see "Page 2" in the "#section-2" "css_element"
 
     # Log back in as student2.
     When I log out
@@ -72,5 +72,5 @@ Feature: availability_timesinceenrol
     And I follow "Course 1"
 
     # Page 1 and Page 2 should appear.
-    Then I should see "Page 1" in the "region-main" "region"
-    And I should see "Page 2" in the "region-main" "region"
+    Then I should see "Page 1" in the "#section-1" "css_element"
+    And I should see "Page 2" in the "#section-2" "css_element"
